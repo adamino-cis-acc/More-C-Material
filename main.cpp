@@ -1,16 +1,32 @@
 #include <iostream>
 using namespace std;
 
+int* readScores(int count){
+    int* values = new int[count];
+    for (int i = 0; i < count; i++){
+        cin >> values[i];
+    }
+
+    return values;
+} //values is destroyed here; the array is not.
+
 int main(){
-    int values[3] = {70, 80, 90};
-    int* p = values; //p points at values[0]
+    int count = 0;
+    cout<<"Number of scores: ";
+    if(!(cin >> count) || count <= 0){
+        cout <<"Enter a positive whole nummber.\n";
+        return 1;
+    }
 
-    cout << *p << '\n'; //values[0]
-    cout << *(p+1) << '\n'; //values1[]; p itsel hasn't changed
+    cout << "Enter the scores: ";
+    int* scores = readScores(count);
 
-    p = p + 2; //new p points at values[2]
-    cout << *p << '\n';
-    --p;                  //back one element to values[1]
-    cout << *p << '\n';
+    //readScores has returned but its arrray is still here.
+    for(int i = 0; i < count; ++i){
+        cout << "Saved score: " << scores[i] << '\n';
+    }
+
+    delete[] scores; //array is destroyed here
+    scores = nullptr;
     return 0;
-}
+} //scores is destroyed here.
